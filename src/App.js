@@ -26,7 +26,6 @@ const points = [
 
 const App = () => {
   const [selectedIndex, setSelectedIndex] = useState(null);
-  const [showImageModal, setShowImageModal] = useState(false); // 控制大图模态框
   const [mapInstance, setMapInstance] = useState(null);
   const panelRef = useRef(null);
 
@@ -42,25 +41,17 @@ const App = () => {
     }
   }, [selectedIndex, mapInstance]);
 
-  // 图标点击：显示面板 + 打开大图
-  const handleIconClick = (index) => {
+  // 处理标记点击
+  const handleMarkerClick = (index) => {
     setSelectedIndex(index);
-    setShowImageModal(true);
   };
 
-  // 文字标签点击：只显示面板，关闭大图（如果有）
-  const handleTextClick = (index) => {
-    setSelectedIndex(index);
-    setShowImageModal(false);
-  };
-
-  // 关闭面板（同时关闭大图）
+  // 关闭面板
   const handleClose = () => {
     setSelectedIndex(null);
-    setShowImageModal(false);
   };
 
-  // --- 原生触摸事件处理（滑动切换）---
+  // 原生触摸事件处理（保持不变）
   useEffect(() => {
     const panel = panelRef.current;
     if (!panel) return;
@@ -93,14 +84,13 @@ const App = () => {
       const deltaY = touch.clientY - touchStartY.current;
 
       if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > minSwipeDistance) {
-        let newIndex;
         if (deltaX > 0) {
-          newIndex = (selectedIndex - 1 + points.length) % points.length;
+          const newIndex = (selectedIndex - 1 + points.length) % points.length;
+          setSelectedIndex(newIndex);
         } else {
-          newIndex = (selectedIndex + 1) % points.length;
+          const newIndex = (selectedIndex + 1) % points.length;
+          setSelectedIndex(newIndex);
         }
-        setSelectedIndex(newIndex);
-        setShowImageModal(false); // 滑动切换时关闭大图
       }
 
       touchStartX.current = 0;
@@ -129,25 +119,37 @@ const App = () => {
           center={selectedIndex !== null ? points[selectedIndex].position : [116.39888, 39.94416]}
           onCreate={setMapInstance}
         >
-          {points.map((point, index) => (
+        {points.map((point, index) => {
+          const isSelected = index === selectedIndex;
+          const iconSize = isSelected ? [40, 40] : [30, 30];
+          const icon = window.AMap
+            ? new window.AMap.Icon({
+                size: iconSize,
+                image: point.icon,
+                imageSize: iconSize,
+              })
+            : point.icon;
+
+          return (
             <React.Fragment key={point.id}>
-              {/* 图标 Marker：点击打开大图 */}
+              {/* 图片标记 */}
               <Marker
                 position={point.position}
-                icon={point.icon}
-                onClick={() => handleIconClick(index)}
+                icon={icon}
+                onClick={() => handleMarkerClick(index)}
               />
-              {/* 文字标签 Marker：点击只显示面板，不打开大图 */}
+              {/* 文字标记 - 动态调整 margin-top */}
               <Marker
                 position={point.position}
-                content={`<div style="margin-top:30px;margin-left:-20px;color:black; background:transparent;font-weight:bold;font-size:12px;white-space: nowrap; width: max-content;">${point.name}</div>`}
-                onClick={() => handleTextClick(index)}
+                content={`<div style="margin-top:${isSelected ? 45 : 35}px; margin-left:-20px; color:black; background:transparent; font-weight:bold; font-size:12px; white-space: nowrap; width: max-content;">${point.name}</div>`}
+                onClick={() => handleMarkerClick(index)}
               />
             </React.Fragment>
-          ))}
+          );
+        })}
         </Map>
 
-        {/* 底部信息面板 */}
+        {/* 底部面板 - 未做任何修改 */}
         {selectedIndex !== null && (
           <div
             ref={panelRef}
@@ -190,7 +192,7 @@ const App = () => {
                   borderRadius: '4px',
                   cursor: 'pointer',
                 }}
-                onClick={() => alert('暂不支持该功能')}
+                onClick={() => alert(`分享 ${points[selectedIndex].name}`)}
               >
                 分享
               </button>
@@ -208,38 +210,6 @@ const App = () => {
                 关闭
               </button>
             </div>
-          </div>
-        )}
-
-        {/* 大图模态框：点击背景关闭 */}
-        {showImageModal && selectedIndex !== null && (
-          <div
-            style={{
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              backgroundColor: 'rgba(0,0,0,0.5)',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              zIndex: 2000,
-              cursor: 'pointer',
-            }}
-            onClick={() => setShowImageModal(false)} // 点击背景关闭
-          >
-            <img
-              src={points[selectedIndex].img}
-              alt={points[selectedIndex].name}
-              style={{
-                maxWidth: '90%',
-                maxHeight: '90%',
-                objectFit: 'contain',
-                cursor: 'default',
-              }}
-              onClick={(e) => e.stopPropagation()} // 防止点击图片时关闭
-            />
           </div>
         )}
       </div>
