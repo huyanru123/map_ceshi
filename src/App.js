@@ -43,7 +43,7 @@ const App = () => {
       <div style={{ position: 'relative', height: '100vh' }}>
         <Map
           style={{ height: '100%', width: '100%' }}
-          zoom={16}
+          zoom={14}
           center={[116.39888, 39.94416]}
         >
 
@@ -71,7 +71,7 @@ const App = () => {
               bottom: '50px',
               display:'flex',
               flexDirection:'row', 
-              height:'250px',         
+              height:'20%',         
               left: '10px',
               right: '10px',
               backgroundColor: '#fff',
@@ -82,16 +82,16 @@ const App = () => {
               zIndex: 1000,
             }}
           >
-             <img src={icbcImg} alt="工行北分行史馆" style={{width: '30%'}} />
+             <img src={icbcImg} alt="工行北分行史馆" style={{width: '20%'}} />
 
             <div style={{
               
               margin:'0 30px',
               
             }}>
-              <h4 style={{ margin: '0 0 8px 0',fontSize:'24px' }}>工行北分行史馆</h4>
+              <h4 style={{ margin: '0 0 8px 0',fontSize:'16px' }}>工行北分行史馆</h4>
             <p style={{ margin: '0 0 16px 0', color: '#666' }}>
-              中国工商银行北京市分行行史馆是展示其发展历程与企业文化的重要窗口。展馆通过大量珍贵的老照片、账册、算盘及各个时期的金融实物，生动还原了从手工记账到数字化金融的巨大变迁。馆内通常分为历史沿革、业务成就、服务创新及党建引领等区域，不仅记录了该行支持首都经济建设的辉煌足迹，也体现了“工于至诚，行以致远”的价值理念。该馆主要面向员工及嘉宾开放，是进行内部教育及对外交流的平台。
+              行史馆
             </p>
             {/* <img src={icbcImg} alt="工行鼓楼支行" style={{ width: '100%', maxWidth: '300px' }} /> */}
             <button
@@ -152,7 +152,7 @@ const App = () => {
               bottom: '50px',
               display:'flex',
               flexDirection:'row', 
-              height:'250px',         
+              height:'20%',         
               left: '10px',
               right: '10px',
               backgroundColor: '#fff',
@@ -163,16 +163,16 @@ const App = () => {
               zIndex: 1000,
             }}
           >
-             <img src={icbcImg1} alt="工行鼓楼支行" style={{width: '30%'}} />
+             <img src={icbcImg1} alt="工行鼓楼支行" style={{width: '20%'}} />
 
             <div style={{
               
               margin:'0 30px',
               
             }}>
-              <h4 style={{ margin: '0 0 8px 0',fontSize:'24px' }}>工行鼓楼支行</h4>
+              <h4 style={{ margin: '0 0 8px 0',fontSize:'16px' }}>工行鼓楼支行</h4>
             <p style={{ margin: '0 0 16px 0', color: '#666' }}>
-              中国工商银行北京鼓楼支行位于北京市西城区地安门外大街31号。该支行成立于2006年2月27日，是一家经批准成立的股份有限公司分公司。其经营范围涵盖了传统的本外币业务，包括办理人民币存款、贷款、结算，以及外汇存款、汇款、国际结算和结售汇等。如需办理业务，可拨打联系电话010-64051935或010-57970066进行咨询。
+              鼓楼支行
             </p>
             {/* <img src={icbcImg} alt="工行鼓楼支行" style={{ width: '100%', maxWidth: '300px' }} /> */}
             <button
