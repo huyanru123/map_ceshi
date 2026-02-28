@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Map, APILoader, Marker } from '@uiw/react-amap';
-import museumImg from './asset/museum.png';
+import museumImg from './asset/ic_icbc.svg';
 import icbcImg from './asset/icbc.jpg';
 import icbcImg1 from './asset/2.jpg';
 import icbcImg2 from './asset/3.jpg';
@@ -166,7 +166,7 @@ const App = () => {
               bottom: '30px',
               left: 0,
               right: 0,
-              height: '20%',
+              height: '30%',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'flex-end',
@@ -177,7 +177,7 @@ const App = () => {
             {/* 左侧预览面板（前一个点）- 始终显示 */}
             <div
               style={{
-                width: '5%',
+                width: '2%',
                 height: '100%',
                 backgroundColor: '#fff',
                 boxShadow: '0 -2px 10px rgba(0,0,0,0.1)',
@@ -232,7 +232,7 @@ const App = () => {
             <div
               ref={panelRef}
               style={{
-                width: '86%',
+                width: '90%',
                 height: '100%',
                 backgroundColor: '#fff',
                 boxShadow: '0 -2px 10px rgba(0,0,0,0.1)',
@@ -293,7 +293,7 @@ const App = () => {
             {/* 右侧预览面板（后一个点）- 始终显示 */}
             <div
               style={{
-                width: '5%',
+                width: '2%',
                 height: '100%',
                 backgroundColor: '#fff',
                 boxShadow: '0 -2px 10px rgba(0,0,0,0.1)',
