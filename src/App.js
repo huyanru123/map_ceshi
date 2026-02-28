@@ -143,12 +143,12 @@ const App = () => {
               <React.Fragment key={point.id}>
                 {/* 图片标记 */}
                 <Marker
-  position={point.position}
-  content={`<div style="width:${isSelected ? 40 : 30}px; height:${isSelected ? 40 : 30}px;">
-              <img src="${point.icon}" style="width:100%; height:100%; object-fit:contain;" />
-            </div>`}
-  onClick={() => handleMarkerClick(index)}
-/>
+                  position={point.position}
+                  content={`<div style="width:${isSelected ? 45 : 30}px; height:${isSelected ? 45 : 30}px;">
+                              <img src="${point.icon}" style="width:100%; height:100%; object-fit:contain;" />
+                            </div>`}
+                  onClick={() => handleMarkerClick(index)}
+                />
                 {/* 文字标记 - 动态调整 margin-top */}
                 <Marker
                   position={point.position}
@@ -183,7 +183,8 @@ const App = () => {
                 height: '100%',
                 backgroundColor: '#fff',
                 boxShadow: '0 -2px 10px rgba(0,0,0,0.1)',
-                borderTopLeftRadius: '12px',
+                borderTopRightRadius: '12px',
+                borderBottomRightRadius: '12px',
                 overflow: 'hidden',
                 pointerEvents: 'auto',
                 cursor: 'pointer',
@@ -238,8 +239,7 @@ const App = () => {
                 height: '100%',
                 backgroundColor: '#fff',
                 boxShadow: '0 -2px 10px rgba(0,0,0,0.1)',
-                borderTopLeftRadius: 0,
-                borderTopRightRadius: 0,
+                borderRadius: '12px',
                 marginLeft: '2%',
                 marginRight: '2%',
                 pointerEvents: 'auto',
@@ -300,6 +300,7 @@ const App = () => {
                 backgroundColor: '#fff',
                 boxShadow: '0 -2px 10px rgba(0,0,0,0.1)',
                 borderTopRightRadius: '12px',
+                borderBottomRightRadius: '12px',
                 overflow: 'hidden',
                 pointerEvents: 'auto',
                 cursor: 'pointer',
