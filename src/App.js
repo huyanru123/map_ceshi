@@ -4,44 +4,42 @@ import museumImg from './asset/museum.png';
 import icbcImg from './asset/icbc.jpg';
 import icbcImg1 from './asset/2.jpg';
 
+// 静态数据定义在组件外部，避免每次渲染重新创建
+const points = [
+  {
+    id: 'museum',
+    name: '工行北分行史馆',
+    desc: '行史馆',
+    position: [116.39888, 39.94416],
+    img: icbcImg,
+    icon: museumImg,
+  },
+  {
+    id: 'gulou',
+    name: '工行鼓楼支行',
+    desc: '鼓楼支行',
+    position: [116.391, 39.9417],
+    img: icbcImg1,
+    icon: museumImg,
+  },
+];
+
 const App = () => {
-  // 定义地图上所有兴趣点数据
-  const points = [
-    {
-      id: 'museum',
-      name: '工行北分行史馆',
-      desc: '行史馆',
-      position: [116.39888, 39.94416],
-      img: icbcImg,
-      icon: museumImg,
-    },
-    {
-      id: 'gulou',
-      name: '工行鼓楼支行',
-      desc: '鼓楼支行',
-      position: [116.391, 39.9417],
-      img: icbcImg1,
-      icon: museumImg,
-    },
-  ];
-
-  // 当前选中的点索引，null 表示面板关闭
   const [selectedIndex, setSelectedIndex] = useState(null);
-
-  // 保存地图实例
   const [mapInstance, setMapInstance] = useState(null);
+  const panelRef = useRef(null);
 
-  // 触摸滑动相关 refs
+  // 触摸滑动相关
   const touchStartX = useRef(0);
   const touchStartY = useRef(0);
-  const minSwipeDistance = 30; // 最小滑动距离阈值
+  const minSwipeDistance = 30;
 
-  // 当选中索引变化时，将地图中心移动到对应点
+  // 地图中心联动
   useEffect(() => {
     if (selectedIndex !== null && mapInstance) {
       mapInstance.setCenter(points[selectedIndex].position);
     }
-  }, [selectedIndex, mapInstance, points]);
+  }, [selectedIndex, mapInstance]); // points 是外部常量，无需加入依赖
 
   // 处理标记点击
   const handleMarkerClick = (index) => {
@@ -53,51 +51,64 @@ const App = () => {
     setSelectedIndex(null);
   };
 
-  // 触摸事件处理：实现左右滑动切换
-  const handleTouchStart = (e) => {
-    const touch = e.touches[0];
-    touchStartX.current = touch.clientX;
-    touchStartY.current = touch.clientY;
-  };
+  // --- 原生触摸事件处理 ---
+  useEffect(() => {
+    const panel = panelRef.current;
+    if (!panel) return;
 
-  const handleTouchMove = (e) => {
-    // 如果主要是水平滑动，尝试阻止页面滚动
-    if (touchStartX.current !== 0) {
+    const onTouchStart = (e) => {
+      const touch = e.touches[0];
+      touchStartX.current = touch.clientX;
+      touchStartY.current = touch.clientY;
+    };
+
+    const onTouchMove = (e) => {
+      if (touchStartX.current === 0) return;
       const touch = e.touches[0];
       const deltaX = touch.clientX - touchStartX.current;
       const deltaY = touch.clientY - touchStartY.current;
       if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 10) {
-        e.preventDefault(); // 注意：在部分浏览器中需要设置 passive: false 才有效
+        e.preventDefault();
       }
-    }
-  };
+    };
 
-  const handleTouchEnd = (e) => {
-    if (selectedIndex === null) return; // 面板未打开时不处理
-
-    const touch = e.changedTouches[0];
-    if (!touch) return;
-
-    const deltaX = touch.clientX - touchStartX.current;
-    const deltaY = touch.clientY - touchStartY.current;
-
-    // 确保是水平滑动且超过阈值
-    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > minSwipeDistance) {
-      if (deltaX > 0) {
-        // 向右滑动 -> 上一个点 (索引减1)
-        const newIndex = (selectedIndex - 1 + points.length) % points.length;
-        setSelectedIndex(newIndex);
-      } else {
-        // 向左滑动 -> 下一个点 (索引加1)
-        const newIndex = (selectedIndex + 1) % points.length;
-        setSelectedIndex(newIndex);
+    const onTouchEnd = (e) => {
+      if (selectedIndex === null) {
+        touchStartX.current = 0;
+        return;
       }
-    }
+      const touch = e.changedTouches[0];
+      if (!touch) return;
 
-    // 重置
-    touchStartX.current = 0;
-    touchStartY.current = 0;
-  };
+      const deltaX = touch.clientX - touchStartX.current;
+      const deltaY = touch.clientY - touchStartY.current;
+
+      if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > minSwipeDistance) {
+        if (deltaX > 0) {
+          const newIndex = (selectedIndex - 1 + points.length) % points.length;
+          setSelectedIndex(newIndex);
+        } else {
+          const newIndex = (selectedIndex + 1) % points.length;
+          setSelectedIndex(newIndex);
+        }
+      }
+
+      touchStartX.current = 0;
+      touchStartY.current = 0;
+    };
+
+    panel.addEventListener('touchstart', onTouchStart, { passive: true });
+    panel.addEventListener('touchmove', onTouchMove, { passive: false });
+    panel.addEventListener('touchend', onTouchEnd, { passive: true });
+    panel.addEventListener('touchcancel', onTouchEnd, { passive: true });
+
+    return () => {
+      panel.removeEventListener('touchstart', onTouchStart);
+      panel.removeEventListener('touchmove', onTouchMove);
+      panel.removeEventListener('touchend', onTouchEnd);
+      panel.removeEventListener('touchcancel', onTouchEnd);
+    };
+  }, [selectedIndex]); // 仅依赖 selectedIndex，points 为外部常量
 
   return (
     <APILoader akey="5f9a49a1f3f724139a51158d028d4ecb">
@@ -105,19 +116,16 @@ const App = () => {
         <Map
           style={{ height: '100%', width: '100%' }}
           zoom={14}
-          center={[116.39888, 39.94416]} // 默认中心
-          onCreate={setMapInstance}       // 获取地图实例
+          center={[116.39888, 39.94416]}
+          onCreate={setMapInstance}
         >
-          {/* 动态生成所有点的标记：图标 + 文字 */}
           {points.map((point, index) => (
             <React.Fragment key={point.id}>
-              {/* 图标 Marker */}
               <Marker
                 position={point.position}
                 icon={point.icon}
                 onClick={() => handleMarkerClick(index)}
               />
-              {/* 文字 Marker（自定义 div 样式） */}
               <Marker
                 position={point.position}
                 content={`<div style="margin-top:30px;margin-left:-20px;color:black; background:transparent;font-weight:bold;font-size:12px;white-space: nowrap; width: max-content;">${point.name}</div>`}
@@ -127,12 +135,12 @@ const App = () => {
           ))}
         </Map>
 
-        {/* 统一底部面板：当 selectedIndex 不为 null 时显示 */}
         {selectedIndex !== null && (
           <div
+            ref={panelRef}
             style={{
               position: 'absolute',
-              bottom: '50px',
+              bottom: '30px',
               display: 'flex',
               flexDirection: 'row',
               height: '20%',
@@ -144,18 +152,14 @@ const App = () => {
               borderTopLeftRadius: '12px',
               borderTopRightRadius: '12px',
               zIndex: 1000,
-              touchAction: 'pan-y', // 允许垂直滚动，减少水平滚动干扰
+              touchAction: 'pan-y',
             }}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
           >
             <img
               src={points[selectedIndex].img}
               alt={points[selectedIndex].name}
-              style={{ width: '50px', height: '50px', objectFit: 'cover' }}
+              style={{ width: '70px', height: '70px', objectFit: 'cover' }}
             />
-
             <div style={{ margin: '0 30px', flex: 1 }}>
               <h4 style={{ margin: '0 0 8px 0', fontSize: '16px' }}>
                 {points[selectedIndex].name}
