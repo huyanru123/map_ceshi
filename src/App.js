@@ -177,7 +177,7 @@ const App = () => {
             {/* 左侧预览面板（前一个点）- 始终显示 */}
             <div
               style={{
-                width: '15%',
+                width: '5%',
                 height: '100%',
                 backgroundColor: '#fff',
                 boxShadow: '0 -2px 10px rgba(0,0,0,0.1)',
@@ -232,7 +232,7 @@ const App = () => {
             <div
               ref={panelRef}
               style={{
-                width: '66%',
+                width: '86%',
                 height: '100%',
                 backgroundColor: '#fff',
                 boxShadow: '0 -2px 10px rgba(0,0,0,0.1)',
@@ -293,7 +293,7 @@ const App = () => {
             {/* 右侧预览面板（后一个点）- 始终显示 */}
             <div
               style={{
-                width: '15%',
+                width: '5%',
                 height: '100%',
                 backgroundColor: '#fff',
                 boxShadow: '0 -2px 10px rgba(0,0,0,0.1)',
