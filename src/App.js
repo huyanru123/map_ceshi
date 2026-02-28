@@ -50,16 +50,11 @@ const App = () => {
           <Marker
             position={[116.39888, 39.94416]}
             icon={museumImg} // 使用正确配置的 icon
-            // label={{    
-            //   content: '<div style="color:red; background:transparent;border:None">工行北分行史馆</div>',
-            //   direction: 'bottom',   
-            //   offset: [0, 10], 
-            // }}
 
             onClick={handleMarkerClick}
           />
           <Marker
-            position={[116.39830, 39.9434]}
+            position={[116.3972, 39.942]}
             content={'<div style="color:black; background:transparent;font-weight:bold;font-size:12px;white-space: nowrap; width: max-content;">工行北分行史馆</div>'} 
             onClick={handleMarkerClick}
           />
@@ -82,7 +77,7 @@ const App = () => {
               zIndex: 1000,
             }}
           >
-             <img src={icbcImg} alt="工行北分行史馆" style={{width: '20%'}} />
+             <img src={icbcImg} alt="工行北分行史馆" style={{width: '50px',height:'50px'}} />
 
             <div style={{
               
@@ -140,7 +135,7 @@ const App = () => {
             onClick={handleMarkerClick1}
         />
         <Marker
-            position={[116.3904, 39.94095]}
+            position={[116.3895, 39.9395]}
             content={'<div style="color:black; background:transparent;font-weight:bold;font-size:12px;white-space: nowrap; width: max-content;">工行鼓楼支行</div>'} 
             onClick={handleMarkerClick1}
         />
@@ -163,7 +158,7 @@ const App = () => {
               zIndex: 1000,
             }}
           >
-             <img src={icbcImg1} alt="工行鼓楼支行" style={{width: '20%'}} />
+             <img src={icbcImg1} alt="工行鼓楼支行" style={{width: '50px',height:'50px'}} />
 
             <div style={{
               
