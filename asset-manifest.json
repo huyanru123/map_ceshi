@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.js": "/map_ceshi/static/js/main.a288bffa.js",
+    "main.js": "/map_ceshi/static/js/main.c62aaed5.js",
     "static/media/icbc.jpg": "/map_ceshi/static/media/icbc.1afd59a314399ee32a98.jpg",
     "static/media/2.jpg": "/map_ceshi/static/media/2.63c83d765aa1fb6e7b91.jpg",
     "index.html": "/map_ceshi/index.html",
-    "main.a288bffa.js.map": "/map_ceshi/static/js/main.a288bffa.js.map"
+    "main.c62aaed5.js.map": "/map_ceshi/static/js/main.c62aaed5.js.map"
   },
   "entrypoints": [
-    "static/js/main.a288bffa.js"
+    "static/js/main.c62aaed5.js"
   ]
 }
