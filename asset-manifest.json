@@ -1,0 +1,12 @@
+{
+  "files": {
+    "main.js": "/map_ceshi/static/js/main.da5b7445.js",
+    "static/media/icbc.jpg": "/map_ceshi/static/media/icbc.1afd59a314399ee32a98.jpg",
+    "static/media/2.jpg": "/map_ceshi/static/media/2.63c83d765aa1fb6e7b91.jpg",
+    "index.html": "/map_ceshi/index.html",
+    "main.da5b7445.js.map": "/map_ceshi/static/js/main.da5b7445.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.da5b7445.js"
+  ]
+}
