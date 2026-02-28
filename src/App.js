@@ -54,8 +54,8 @@ const App = () => {
             onClick={handleMarkerClick}
           />
           <Marker
-            position={[116.3972, 39.942]}
-            content={'<div style="color:black; background:transparent;font-weight:bold;font-size:12px;white-space: nowrap; width: max-content;">工行北分行史馆</div>'} 
+            position={[116.39888, 39.94416]}
+            content={'<div style="margin-top:30px;margin-left:-20px;color:black; background:transparent;font-weight:bold;font-size:12px;white-space: nowrap; width: max-content;">工行北分行史馆</div>'} 
             onClick={handleMarkerClick}
           />
                  {/* 底部弹出面板 - 使用绝对定位固定在底部 */}
@@ -135,8 +135,8 @@ const App = () => {
             onClick={handleMarkerClick1}
         />
         <Marker
-            position={[116.3895, 39.9395]}
-            content={'<div style="color:black; background:transparent;font-weight:bold;font-size:12px;white-space: nowrap; width: max-content;">工行鼓楼支行</div>'} 
+            position={[116.391, 39.9417]}
+            content={'<div style="margin-top:30px;margin-left:-20px;color:black; background:transparent;font-weight:bold;font-size:12px;white-space: nowrap; width: max-content;">工行鼓楼支行</div>'} 
             onClick={handleMarkerClick1}
         />
                  {/* 底部弹出面板 - 使用绝对定位固定在底部 */}
