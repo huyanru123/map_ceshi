@@ -37,7 +37,7 @@ const App = () => {
   // 地图中心联动
   useEffect(() => {
     if (selectedIndex !== null && mapInstance) {
-      mapInstance.setCenter(points[selectedIndex].position);
+      mapInstance.setCenter(points[selectedIndex].position,true);
     }
   }, [selectedIndex, mapInstance]); // points 是外部常量，无需加入依赖
 
@@ -116,8 +116,8 @@ const App = () => {
         <Map
           style={{ height: '100%', width: '100%' }}
           zoom={14}
-          center={[116.39888, 39.94416]}
-          onCreate={setMapInstance}
+          center={selectedIndex !== null ? points[selectedIndex].position : [116.39888, 39.94416]} // 动态中心
+          onCreate={setMapInstance} // 仍可获取实例用于其他操作
         >
           {points.map((point, index) => (
             <React.Fragment key={point.id}>
@@ -177,7 +177,7 @@ const App = () => {
                   borderRadius: '4px',
                   cursor: 'pointer',
                 }}
-                onClick={() => alert(`分享 ${points[selectedIndex].name}`)}
+                onClick={() => alert(`暂不支持该功能`)}
               >
                 分享
               </button>
