@@ -130,23 +130,25 @@ const App = () => {
         >
           {points.map((point, index) => {
             const isSelected = index === selectedIndex;
-            const iconSize = isSelected ? [40, 40] : [30, 30];
-            const icon = window.AMap
-              ? new window.AMap.Icon({
-                  size: iconSize,
-                  image: point.icon,
-                  imageSize: iconSize,
-                })
-              : point.icon;
+            // const iconSize = isSelected ? [40, 40] : [30, 30];
+            // const icon = window.AMap
+            //   ? new window.AMap.Icon({
+            //       size: iconSize,
+            //       image: point.icon,
+            //       imageSize: iconSize,
+            //     })
+            //   : point.icon;
 
             return (
               <React.Fragment key={point.id}>
                 {/* 图片标记 */}
                 <Marker
-                  position={point.position}
-                  icon={icon}
-                  onClick={() => handleMarkerClick(index)}
-                />
+  position={point.position}
+  content={`<div style="width:${isSelected ? 40 : 30}px; height:${isSelected ? 40 : 30}px;">
+              <img src="${point.icon}" style="width:100%; height:100%; object-fit:contain;" />
+            </div>`}
+  onClick={() => handleMarkerClick(index)}
+/>
                 {/* 文字标记 - 动态调整 margin-top */}
                 <Marker
                   position={point.position}
@@ -166,7 +168,7 @@ const App = () => {
               bottom: '30px',
               left: 0,
               right: 0,
-              height: '30%',
+              height: '25%',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'flex-end',
